@@ -27,5 +27,14 @@ pipeline{
                 }  
             }
         }
+        stage("docker build & docker push"){
+            steps{
+                script{
+                    sh '''
+                    docker build -t nexusIp:8083/springapp:${VERSION} .
+                    '''
+                }
+            }
+        }
     }
 }
