@@ -2,6 +2,7 @@ pipeline{
     agent any 
     environment{
         VERSION = "${env.BUILD_ID}"
+        DATREE_TOKEN secret/environment
     }
     stages{
         stage("sonar quality check"){
@@ -36,15 +37,18 @@ pipeline{
                 }
             }
         }
-        stage("indentify misconfigs using datree in helm charts"){
+        stage('indentify misconfigs using datree in helm charts'){
             steps{
                 script{
                     dir('kubernetes/') {
-                        sh 'helm datree test myapp/'
+                        withEnv(['DATREE_TOKEN=f6332b28-e5c3-4d8b-867e-557dbe09fb86']) {
+                            sh 'helm datree test myapp/'
+                        } 
                     }
                 }
             }
         }
     }
 }
+
 
