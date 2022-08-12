@@ -24,7 +24,8 @@ pipeline{
         }
         stage("docker build & docker push"){
             steps{
-                script{withCredentials([string(credentialsId: 'docker_Pass', variable: 'docker_Pass')]) {
+                script{
+                    withCredentials([string(credentialsId: 'docker_Pass', variable: 'docker_Pass')]) {
                     sh '''
                     docker build -t 34.125.3.117:8083/springapp:${VERSION} .
                     docker login -u admin -p $docker_Pass 34.125.3.117:8083
@@ -35,7 +36,7 @@ pipeline{
                 }
             }
         }
-        stage('indentify misconfigs using datree in helm charts'){
+        stage("indentify misconfigs using datree in helm charts"){
             steps{
                 scripts{
                     dir('kubernetes/') {
