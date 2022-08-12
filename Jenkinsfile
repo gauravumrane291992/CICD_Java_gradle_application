@@ -2,7 +2,6 @@ pipeline{
     agent any 
     environment{
         VERSION = "${env.BUILD_ID}"
-        DATREE_TOKEN secret/environment
     }
     stages{
         stage("sonar quality check"){
