@@ -29,12 +29,18 @@ pipeline{
         }
         stage("docker build & docker push"){
             steps{
-                script{
+                script{withCredentials([string(credentialsId: 'docker_Pass', variable: 'docker_Pass')]) {
                     sh '''
-                    docker build -t nexusIp:8083/springapp:${VERSION} .
+                    docker build -t 34.125.3.117:8083/springapp:${VERSION} .
+                    docker login -u admin -p $docker_Pass 34.125.3.117:8083
+                    docker push 34.125.3.117:8083/springapp:${VERSION}
+                    docker rmi 34.125.3.117:8083/springapp:${VERSION}
                     '''
+                    }
+                    
                 }
             }
         }
     }
 }
+
