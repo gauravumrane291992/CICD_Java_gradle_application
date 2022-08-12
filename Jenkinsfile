@@ -38,7 +38,7 @@ pipeline{
         }
         stage("indentify misconfigs using datree in helm charts"){
             steps{
-                scripts{
+                script{
                     dir('kubernetes/') {
                         sh 'helm datree test myapp/'
                     }
